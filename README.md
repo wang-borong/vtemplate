@@ -1,0 +1,2 @@
+# icarus verilog + gtkwave template
+
