@@ -13,7 +13,7 @@ else
 	BIN := a.out
 endif
 
-VSRC = $(wildcard *.v)
+VSRC = $(wildcard src/*.v)
 
 # find the dumpfile name from v sources
 WAVE_FILE := $(shell grep dumpfile $(VSRC) | \
