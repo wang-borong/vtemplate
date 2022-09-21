@@ -5,15 +5,7 @@ SIM_TOOL := iverilog
 SIM_EXEC := vvp
 WAVE_TOOL := gtkwave
 
-ifdef TOP
-	BIN := $(TOP).vvp
-	SIMOPTS += -s $(TOP) -o $(TOP).vvp
-else
-	# let the iverilog to get the topmodule
-	BIN := a.out
-endif
-
-VSRC = $(wildcard src/*.v)
+VSRC = $(shell find src -name "*.v")
 
 # find the dumpfile name from v sources
 WAVE_FILE := $(shell grep dumpfile $(VSRC) | \
@@ -21,6 +13,12 @@ WAVE_FILE := $(shell grep dumpfile $(VSRC) | \
 ifndef WAVE_FILE
 	$(error Can not get wave file!)
 endif
+
+TOPFILE := $(shell grep -H --only-matching dumpfile $(VSRC) | \
+		   sed 's/:dumpfile//')
+TOPMODULE := $(shell sed -nE 's/module (\w+).*/\1/p' $(TOPFILE))
+BIN := $(TOPMODULE).vvp
+SIMOPTS := -s $(TOPMODULE) -o $(BIN)
 
 .PHONY: all clean sim wave
 
