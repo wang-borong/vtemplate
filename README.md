@@ -47,5 +47,9 @@ The wave file can be named to your topmodule, but it's not
 mandatory.  The `Makefile` will find the name automatically
 and open it with `gtkwave` when you instruct `make wave`.
 
+If you have several module blocks to be test with individual 
+testbench, you can specify the testbench file name by
+`make TESTBENCH=src/testbench_name`.
+
 
 That's all.
